@@ -8,15 +8,16 @@ from github import Github
 
 
 time.strftime("%d%m%Y")
-try:
-    os.mkdir("logs")
-except:
-    pass
+# try:
+#     os.mkdir("logs")
+# except:
+#     pass
 
-log = open("./logs/{}{}{}.log".format(time.strftime("%d"), time.strftime("%m"), time.strftime("%Y")), "at")
-data = open("./data.json")
-data = json.loads(data.read())
-log.write("\n==============================================================\n")
+# log = open("./logs/{}{}{}.log".format(time.strftime("%d"), time.strftime("%m"), time.strftime("%Y")), "at")
+try:
+    data = open("./data.json")
+    data = json.loads(data.read())
+# log.write("\n==============================================================\n")
 app = QtWidgets.QApplication()
 g = Github()
 srv = g.get_repo("sergoum/login_project")
@@ -26,14 +27,14 @@ srv = g.get_repo("sergoum/login_project")
 class Auth(object):
     def __init__(self):
         global a
-        log.write("Checking for stored credentials...")
+#         log.write("Checking for stored credentials...")
         if data["username"] != "" and data["password"] != "":
-            log.write("\nCredentials found. Attempting to authenticate...")
+#             log.write("\nCredentials found. Attempting to authenticate...")
             if self.verify(data["username"], data["password"]):
-                log.write("\nAuthentication successful! Starting App...")
+#                 log.write("\nAuthentication successful! Starting App...")
                 a = App()
             else:
-                log.write("\nAuthentication failed. Requesting authentication from user.")
+#                 log.write("\nAuthentication failed. Requesting authentication from user.")
                 self.request()
 
     
@@ -125,9 +126,9 @@ class Auth(object):
         if len(self.ubox.text()) <= 20 and len(self.ubox.text()) >= 2:
             self.submitted = True
             if self.verify(self.ubox.text(), self.pbox.text()):
-                log.write("\nAuthentication successful! Starting app...")
+#                 log.write("\nAuthentication successful! Starting app...")
                 self.login_diag.destroy()
-                log.close()
+#                 log.close()
                 self.a = App()
             else:
                 self.request()
@@ -140,6 +141,7 @@ class App(object):
         self.launch()
 
     def launch(self):
+        '''Main code for the application you are making'''
         self.win = QtWidgets.QMainWindow()
         self.label = QtWidgets.QLabel(self.win)
         self.label.setText("YAY YOU LOGGED IN")
